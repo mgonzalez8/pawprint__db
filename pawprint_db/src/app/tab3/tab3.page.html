@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      {{name}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="flase">
+  <ion-item *ngFor="let item of configurationsitems">
+    <ion-label class="ion-text-wrap">
+      <ion-text>
+        <h3>{{item.item.toUpperCase()}}</h3>
+      </ion-text>
+      <p>Fecha: {{item.fecha | date:'short'}}</p>
+      <ion-text>
+        <p>Tipo: {{item.type}} - Version: {{item.version}}</p>
+      </ion-text>
+      <ion-text>
+        <p>{{item.password}}</p>
+      </ion-text>
+    </ion-label>
+  </ion-item>
+
+  <app-explore-container name="Tab 3 page"></app-explore-container>
+</ion-content>

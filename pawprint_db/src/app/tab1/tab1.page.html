@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Huellas de base de datos
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="presentActionSheet()">
+        <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <ion-card *ngFor="let item of items">
+      <ion-item>
+        <ion-icon name="pin" slot="start"></ion-icon>
+        <ion-label>{{item.namepawprint.toUpperCase()}}</ion-label>
+        <ion-button fill="outline" *ngIf="compareShow" (click)="select(item)" [color]="item.color" slot="end">Seleccionar</ion-button>
+        <ion-button fill="claer" *ngIf="!compareShow" (click)="goToPaw(item)" [color]="item.color" slot="end"><ion-icon name="chevron-forward-outline"></ion-icon></ion-button>
+      </ion-item>
+      <ion-card-content>
+        Versión: {{item.version}} - Fecha: {{item.fecha |  date:'short'}}
+      </ion-card-content>
+    </ion-card>
+    <ion-fab *ngIf="compare" (click)="compareItems()" vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button>
+        <ion-icon name="arrow-forward-circle"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+</ion-content>

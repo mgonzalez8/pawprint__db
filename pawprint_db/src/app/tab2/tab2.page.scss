@@ -1,0 +1,16 @@
+ion-content {
+    width: 100% auto !important;
+}
+
+.grid{
+    height: 100%;
+    padding: 50% 0;
+}
+
+.column{
+    padding: 20px;
+    ion-button {
+        margin-top: 20px;
+        margin-left: 25%;
+    }
+}

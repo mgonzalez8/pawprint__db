@@ -1,0 +1,47 @@
+CREATE TABLE pawprint (
+    id BIGINT NOT NULL,
+	released VARCHAR(150) NOT NULL,
+	created_at VARCHAR(150) NOT NULL,
+	type VARCHAR(150) NOT NULL,
+	object VARCHAR(150) NOT NULL,
+	code TEXT,
+	CONSTRAINT key99 PRIMARY KEY (id)
+)
+
+CREATE PROCEDURE `GenerateRelease`(table, sh256)
+
+	DECLARE
+		D_nombre ALIAS FOR $1;
+		D_date ALIAS FOR $2;
+		V_table table;
+		R_sha256 sh256;
+		Result RECORD;
+		Result2 RECORD;
+		Result3 RECORD;
+	
+	BEGIN
+		FOR Result IN 
+			SELECT table_name FROM information_schema.COLUMNS WHERE table_schema = 'imuko' GROUP BY table_name
+		LOOP
+			SELECT INTO R_sha256 fc_sha256table(Result.table_name);
+			INSERT INTO pawprint VALUES(DEFAULT,D_nombre,D_date,Result.table_name,R_sha256);
+		END LOOP;
+
+		FOR Result2 IN 
+			SELECT sequence_name FROM information_schema.sequences
+		LOOP
+			SELECT INTO R_sha256 fc_sha256sequence(Result2.sequence_name);
+			INSERT INTO pawprint VALUES(DEFAULT,D_nombre,D_date,Result2.sequence_name,R_sha256);
+		END LOOP;
+
+		FOR Result3 IN 
+			SELECT routines.routine_name
+			FROM information_schema.routines
+			LEFT JOIN information_schema.parameters ON routines.specific_name=parameters.specific_name
+			WHERE routines.specific_schema='imuko' AND routines.routine_name ILIKE ('fc_%')
+			ORDER BY routines.routine_name, parameters.ordinal_position
+		LOOP
+			SELECT INTO R_sha256 fc_sha256sequence(Result3.routine_name);
+			INSERT INTO pawprint VALUES(DEFAULT,D_nombre,D_date,Result3.routine_name,R_sha256);
+		END LOOP;
+	END

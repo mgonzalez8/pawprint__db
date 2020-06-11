@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item *ngFor="let item of items">
+    <ion-label class="ion-text-wrap">
+      <ion-text>
+        <h3>{{item.name.toUpperCase()}}</h3>
+      </ion-text>
+      <ion-text *ngFor="let pass of item.password">
+        <p>{{pass}}</p>
+      </ion-text>
+    </ion-label>
+  </ion-item>
+
+</ion-content>
